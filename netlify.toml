@@ -3,7 +3,7 @@
   publish = "dist"
 
 [functions]
-  node_router = true
+  directory = "netlify/functions"
 
 [[redirects]]
   from = "/api/*"
