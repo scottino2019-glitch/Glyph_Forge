@@ -34,6 +34,8 @@ const DEFAULT_CONFIG: MonsterConfig = {
   globalAccessoryStyle: 'none',
   globalStrokeColor: '#111827',
   globalStrokeWidth: 5,
+  globalGradientFrom: '#ff007f',
+  globalGradientTo: '#7f00ff',
   letterOverrides: INITIAL_OVERRIDES,
   backgroundColor: 'bedroom',
   shadowColor: 'rgba(0,0,0,0.4)',
@@ -150,6 +152,8 @@ export default function App() {
         globalDetailStyle: aiConfig.globalDetailStyle || prev.globalDetailStyle,
         globalAccessoryStyle: aiConfig.globalAccessoryStyle || 'none',
         globalStrokeColor: aiConfig.globalStrokeColor || prev.globalStrokeColor,
+        globalGradientFrom: aiConfig.customFrom || prev.globalGradientFrom,
+        globalGradientTo: aiConfig.customTo || prev.globalGradientTo,
         // Reset overrides to apply the newly minted AI style symmetrically or asymmetric letterOverrides on request
         letterOverrides: Object.keys(overrides).length > 0 ? overrides : {}
       };

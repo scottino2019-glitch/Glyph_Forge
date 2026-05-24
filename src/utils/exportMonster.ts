@@ -82,17 +82,19 @@ export function compileMonsterSvg(config: MonsterConfig): string {
       dGradientId = grads[idx % grads.length];
     }
 
+    const isUniform = divMode === 'uniform';
+
     const style = {
-      eyeStyle: override.eyeStyle || dEyeStyle,
-      eyeCount: override.eyeCount !== undefined ? override.eyeCount : dEyeCount,
-      eyePosition: override.eyePosition || 'top',
-      hornStyle: override.hornStyle || dHornStyle,
-      teethStyle: override.teethStyle || dTeethStyle,
-      detailStyle: override.detailStyle || dDetailStyle,
-      accessoryStyle: override.accessoryStyle || dAccessoryStyle,
-      gradientId: override.gradientId || dGradientId,
-      strokeColor: override.strokeColor || config.globalStrokeColor,
-      strokeWidth: override.strokeWidth || config.globalStrokeWidth,
+      eyeStyle: isUniform ? dEyeStyle : (override.eyeStyle || dEyeStyle),
+      eyeCount: isUniform ? dEyeCount : (override.eyeCount !== undefined ? override.eyeCount : dEyeCount),
+      eyePosition: isUniform ? 'top' : (override.eyePosition || 'top'),
+      hornStyle: isUniform ? dHornStyle : (override.hornStyle || dHornStyle),
+      teethStyle: isUniform ? dTeethStyle : (override.teethStyle || dTeethStyle),
+      detailStyle: isUniform ? dDetailStyle : (override.detailStyle || dDetailStyle),
+      accessoryStyle: isUniform ? dAccessoryStyle : (override.accessoryStyle || dAccessoryStyle),
+      gradientId: isUniform ? dGradientId : (override.gradientId || dGradientId),
+      strokeColor: isUniform ? config.globalStrokeColor : (override.strokeColor || config.globalStrokeColor),
+      strokeWidth: isUniform ? config.globalStrokeWidth : (override.strokeWidth || config.globalStrokeWidth),
       rotate: override.rotate !== undefined ? override.rotate : defaultRotate,
       scale: override.scale !== undefined ? override.scale : 1,
       offsetY: override.offsetY !== undefined ? override.offsetY : defaultOffsetY
@@ -102,8 +104,12 @@ export function compileMonsterSvg(config: MonsterConfig): string {
     let fromBg = '#f59e0b';
     let toBg = '#ef4444';
     if (style.gradientId === 'custom') {
-      fromBg = override.gradientFrom || config.letterOverrides[0]?.gradientFrom || '#ff007f';
-      toBg = override.gradientTo || config.letterOverrides[0]?.gradientTo || '#7f00ff';
+      fromBg = isUniform 
+        ? (config.globalGradientFrom || '#ff007f')
+        : (override.gradientFrom || config.globalGradientFrom || config.letterOverrides[0]?.gradientFrom || '#ff007f');
+      toBg = isUniform 
+        ? (config.globalGradientTo || '#7f00ff')
+        : (override.gradientTo || config.globalGradientTo || config.letterOverrides[0]?.gradientTo || '#7f00ff');
     } else {
       const preset = GRADIENT_PRESETS.find(p => p.id === style.gradientId);
       if (preset) {

@@ -11,10 +11,10 @@ interface CanvasPreviewProps {
 }
 
 const BG_THEMES = [
-  { id: 'bedroom', name: 'Camera da Letto (Originale)', className: 'bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-950/40 via-stone-900 to-black text-amber-500' },
-  { id: 'halloween', name: 'Sunset Spettrale', className: 'bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-950/70 via-slate-950 to-black text-amber-500' },
-  { id: 'swamp', name: 'Palude Slime', className: 'bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-teal-950/50 via-slate-950 to-neutral-950 text-emerald-400' },
-  { id: 'space', name: 'Fondale Cosmico', className: 'bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-rose-950/40 via-slate-950 to-black text-rose-500' }
+  { id: 'bedroom', name: 'Camera da Letto (Originale)', className: 'bg-theme-bedroom' },
+  { id: 'halloween', name: 'Sunset Spettrale', className: 'bg-theme-halloween' },
+  { id: 'swamp', name: 'Palude Slime', className: 'bg-theme-swamp' },
+  { id: 'space', name: 'Fondale Cosmico', className: 'bg-theme-space' }
 ];
 
 export default function CanvasPreview({
@@ -67,21 +67,27 @@ export default function CanvasPreview({
       dGradientId = grads[idx % grads.length];
     }
 
+    const isUniform = divMode === 'uniform';
+
     return {
       id: `letter-${idx}-${char}`,
       char,
-      eyeStyle: override.eyeStyle || dEyeStyle,
-      eyeCount: override.eyeCount !== undefined ? override.eyeCount : dEyeCount,
-      eyePosition: override.eyePosition || 'top',
-      hornStyle: override.hornStyle || dHornStyle,
-      teethStyle: override.teethStyle || dTeethStyle,
-      detailStyle: override.detailStyle || dDetailStyle,
-      accessoryStyle: override.accessoryStyle || dAccessoryStyle,
-      gradientId: override.gradientId || dGradientId,
-      gradientFrom: override.gradientFrom || (config.letterOverrides[0]?.gradientFrom),
-      gradientTo: override.gradientTo || (config.letterOverrides[0]?.gradientTo),
-      strokeColor: override.strokeColor || config.globalStrokeColor,
-      strokeWidth: override.strokeWidth || config.globalStrokeWidth,
+      eyeStyle: isUniform ? dEyeStyle : (override.eyeStyle || dEyeStyle),
+      eyeCount: isUniform ? dEyeCount : (override.eyeCount !== undefined ? override.eyeCount : dEyeCount),
+      eyePosition: isUniform ? 'top' : (override.eyePosition || 'top'),
+      hornStyle: isUniform ? dHornStyle : (override.hornStyle || dHornStyle),
+      teethStyle: isUniform ? dTeethStyle : (override.teethStyle || dTeethStyle),
+      detailStyle: isUniform ? dDetailStyle : (override.detailStyle || dDetailStyle),
+      accessoryStyle: isUniform ? dAccessoryStyle : (override.accessoryStyle || dAccessoryStyle),
+      gradientId: isUniform ? dGradientId : (override.gradientId || dGradientId),
+      gradientFrom: isUniform 
+        ? (config.globalGradientFrom || '#ff007f') 
+        : (override.gradientFrom || config.globalGradientFrom || (config.letterOverrides[0]?.gradientFrom) || '#ff007f'),
+      gradientTo: isUniform 
+        ? (config.globalGradientTo || '#7f00ff') 
+        : (override.gradientTo || config.globalGradientTo || (config.letterOverrides[0]?.gradientTo) || '#7f00ff'),
+      strokeColor: isUniform ? config.globalStrokeColor : (override.strokeColor || config.globalStrokeColor),
+      strokeWidth: isUniform ? config.globalStrokeWidth : (override.strokeWidth || config.globalStrokeWidth),
       rotate: override.rotate !== undefined ? override.rotate : defaultRotate,
       scale: override.scale !== undefined ? override.scale : 1,
       offsetY: override.offsetY !== undefined ? override.offsetY : defaultOffsetY,

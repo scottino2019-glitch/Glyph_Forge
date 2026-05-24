@@ -547,24 +547,18 @@ export default function SidebarControls({
             <div className="flex gap-2">
               <input
                 type="color"
-                value={config.letterOverrides[0]?.gradientFrom || '#ff007f'}
+                value={config.globalGradientFrom || '#ff007f'}
                 onChange={(e) => {
-                  onChange(prev => {
-                    const firstOver = { ...prev.letterOverrides[0], gradientFrom: e.target.value };
-                    return { ...prev, letterOverrides: { ...prev.letterOverrides, 0: firstOver } };
-                  });
+                  updateGlobal('globalGradientFrom', e.target.value);
                 }}
                 className="w-5 h-5 bg-transparent rounded-none cursor-pointer border border-black"
                 title="Colore Iniziale"
               />
               <input
                 type="color"
-                value={config.letterOverrides[0]?.gradientTo || '#7f00ff'}
+                value={config.globalGradientTo || '#7f00ff'}
                 onChange={(e) => {
-                  onChange(prev => {
-                    const firstOver = { ...prev.letterOverrides[0], gradientTo: e.target.value };
-                    return { ...prev, letterOverrides: { ...prev.letterOverrides, 0: firstOver } };
-                  });
+                  updateGlobal('globalGradientTo', e.target.value);
                 }}
                 className="w-5 h-5 bg-transparent rounded-none cursor-pointer border border-black"
                 title="Colore Finale"

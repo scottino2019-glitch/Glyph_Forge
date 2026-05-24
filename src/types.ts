@@ -47,6 +47,8 @@ export interface MonsterConfig {
   globalAccessoryStyle?: AccessoryStyle;
   globalStrokeColor: string;
   globalStrokeWidth: number;
+  globalGradientFrom?: string; // custom color start override globally
+  globalGradientTo?: string;   // custom color end override globally
   letterOverrides: Record<number, Partial<LetterStyle>>; // index to style overloads
   backgroundColor: string;
   shadowColor: string;
