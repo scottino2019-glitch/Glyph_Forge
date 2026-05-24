@@ -1,0 +1,6 @@
+{
+  "name": "MostroFont Studio",
+  "description": "Crea scritte e font in stile cartone animato mostruoso. Personalizza occhi, denti, corna, dettagli e colori, oppure genera stili con l'IA di Gemini.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
